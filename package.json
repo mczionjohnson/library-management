@@ -1,7 +1,7 @@
 {
-  "name": "blog-city",
+  "name": "library-manager",
   "version": "1.0.0",
-  "description": "a blogging app",
+  "description": "a library management app",
   "main": "server.js",
   "type": "module",
   "scripts": {
