@@ -1,4 +1,4 @@
-import Blog from "../../models/blogSchema.js";
+import Blog from "../../models/bookSchema.js";
 import logger from '../../logger/logger.js'
 
 export const getAuthBlogs = async (

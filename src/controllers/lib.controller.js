@@ -1,15 +1,19 @@
+import dotenv from "dotenv";
+
 import logger from "../logger/logger.js";
 
 import User from "../models/userSchema.js";
 import Jwt from "jsonwebtoken";
 
-export const authSignup = async (req, res) => {
+dotenv.config();
+
+export const libSignup = async (req, res) => {
   res.setHeader("Content-Type", "application/json");
 
+  const name = req.body.name;
   const email = req.body.email;
   const password = req.body.password;
-  const firstName = req.body.firstName;
-  const lastName = req.body.lastName;
+  const libPass = req.body.libPass;
 
   const checkUser = await User.findOne({ email });
   if (checkUser) {
@@ -18,31 +22,40 @@ export const authSignup = async (req, res) => {
     return;
   }
 
+  if (!name) {
+    return res.status(400).json({ message: "Enter name" });
+  }
   if (!email) {
     return res.status(400).json({ message: "Enter email" });
   }
   if (!password) {
     return res.status(400).json({ message: "Enter password" });
   }
-  if (!firstName) {
-    return res.status(400).json({ message: "Enter first name" });
+  if (!libPass) {
+    return res.status(400).json({ message: "Enter your Library Pass" });
   }
-  if (!lastName) {
-    return res.status(400).json({ message: "Enter last name" });
+  const libSecret = process.env.libSecret;
+  // const asstLibSecret = process.env.asstLibSecret
+
+  if (libPass != libSecret) {
+    return res.status(400).json({ message: "unauthorized" });
   }
+  // if (libPass != asstLib ) {
+  //   return res.status(400).json({ message: "unauthorized" });
+  // }
 
   const payload = {};
-  if (firstName) {
-    payload.firstName = firstName;
-  }
-  if (lastName) {
-    payload.lastName = lastName;
+  if (name) {
+    payload.name = name;
   }
   if (email) {
     payload.email = email;
   }
   if (password) {
     payload.password = password;
+  }
+  if (libPass) {
+    payload.role = "library";
   }
   // logger.info(payload);
 
@@ -55,7 +68,7 @@ export const authSignup = async (req, res) => {
   res.json({ message: "Success", savedUser });
 };
 
-export const authLogin = async (req, res) => {
+export const libLogin = async (req, res) => {
   res.setHeader("Content-Type", "application/json");
 
   const email = req.body.email;
@@ -74,6 +87,8 @@ export const authLogin = async (req, res) => {
   const checkPassword = await user.isValidPassword(password);
   if (checkPassword == false) {
     return res.status(401).json({ message: "Password is incorrect" });
+  } else if (user.role != "library") {
+    return res.status(401).json({ message: "unauthorised" });
   } else {
     const secret = process.env.JWT_SECRET;
     const token = Jwt.sign(

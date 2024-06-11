@@ -1,4 +1,4 @@
-import Blog from "../../models/blogSchema.js";
+import Blog from "../../models/bookSchema.js";
 // import redisClient from "../../integrations/redis.js";
 
 import logger from "../../logger/logger.js";

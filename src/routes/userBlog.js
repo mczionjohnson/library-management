@@ -1,7 +1,7 @@
 import { Router } from "express";
 import logger from '../logger/logger.js'
 
-import Blog from "../models/blogSchema.js";
+import Blog from "../models/bookSchema.js";
 import User from "../models/userSchema.js";
 
 import jwt from "jsonwebtoken";

@@ -2,7 +2,7 @@ import { Router } from "express";
 import logger from '../logger/logger.js'
 
 
-import Blog from "../models/blogSchema.js";
+import Blog from "../models/bookSchema.js";
 import * as userController from "../controllers/blog.controller.js";
 
 const blogRouter = Router();
