@@ -1,4 +1,4 @@
-import * as authService from "./services/userBlog.service.js";
+import * as authService from "./services/not-needed.service.js";
 
 
 export const getAuthBlogs = async (req, res) => {

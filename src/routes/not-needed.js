@@ -7,17 +7,17 @@ import User from "../models/userSchema.js";
 import jwt from "jsonwebtoken";
 import checkAuth from "../middleware/auth.middleware.js";
 
-import * as authController from "../controllers/userBlog.controller.js";
+import * as authController from "../controllers/not-needed.controller.js";
 
-const authBlogRouter = Router();
+const userRouter = Router();
 
-authBlogRouter.all("*", checkAuth);
+userRouter.all("*", checkAuth);
 
-authBlogRouter.get("/", authController.getAuthBlogs);
+userRouter.get("/", authController.getAuthBlogs);
 
 
 // move this code below to the authController
-authBlogRouter.get("/:blogId", async (req, res) => {
+userRouter.get("/:blogId", async (req, res) => {
   const { blogId } = req.params;
   const email = req.user.email;
 
@@ -39,7 +39,7 @@ authBlogRouter.get("/:blogId", async (req, res) => {
   }
 });
 
-authBlogRouter.post("/", async (req, res) => {
+userRouter.post("/", async (req, res) => {
   let token = req.headers.authorization;
   token = token.split(" ")[1];
 
@@ -89,7 +89,7 @@ authBlogRouter.post("/", async (req, res) => {
   }
 });
 
-authBlogRouter.patch("/:blogId", async (req, res) => {
+userRouter.patch("/:blogId", async (req, res) => {
   const { blogId } = req.params;
   const { title, description, tags, blogBody, state } = req.body;
 
@@ -162,7 +162,7 @@ authBlogRouter.patch("/:blogId", async (req, res) => {
   }
 });
 
-authBlogRouter.delete("/:blogId", async (req, res) => {
+userRouter.delete("/:blogId", async (req, res) => {
   const { blogId } = req.params;
 
   let token = req.headers.authorization;
@@ -203,4 +203,4 @@ authBlogRouter.delete("/:blogId", async (req, res) => {
   }
 });
 
-export default authBlogRouter;
+export default userRouter;

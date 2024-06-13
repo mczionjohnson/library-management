@@ -4,13 +4,13 @@ import dotenv from "dotenv";
 import bodyParser from "body-parser";
 import helmet from "helmet";
 
-import limiter from "./config/rateLimiter.js"
+// import limiter from "./config/rateLimiter.js"
 import db from "./database/connection.js";
 import httpLogger from "./logger/httpLogger.js";
 
 import indexRouter from "./routes/index.js";
-import blogRouter from "./routes/Blog.js";
-import authBlogRouter from "./routes/userBlog.js";
+import bookRouter from "./routes/books.js";
+// import authBlogRouter from "./routes/not-needed.js";
 // import redisClient from "./integrations/redis.js"
 
 const app = express();
@@ -36,8 +36,8 @@ db();
 // redisClient.connect()
 
 app.use("/", indexRouter);
-app.use("/blogs", blogRouter);
-app.use("/allmyblogs", authBlogRouter);
+app.use("/books", bookRouter);
+// app.use("/allmyblogs", memRouter);
 
 app.all("*", (req, res) => {
   res.status(404);

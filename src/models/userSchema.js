@@ -2,6 +2,10 @@ import mongoose from "mongoose";
 
 import bcrypt from "bcrypt";
 
+const subSchema = new mongoose.Schema({
+  _id: mongoose.Schema.Types.ObjectId,
+});
+
 const userSchema = mongoose.Schema({
   name: {
     type: String,
@@ -16,21 +20,17 @@ const userSchema = mongoose.Schema({
     required: true,
   },
   role: {
-    type : String,
+    type: String,
     default: "user",
-    enum: ["user", "library"]
+    enum: ["user", "library"],
   },
-  borrowedBooks: {
-    title: {
-      type: String,
-    },
-    author: {
-      type: String,
-    },
-    ISBN: {
-      type: String,
-    }
-  }
+
+  myArray: [subSchema],
+  // borrowedBooks: {
+  //   type: mongoose.Schema.Types.ObjectId,
+  //   default: null,
+  //   ref: "Book",
+  // },
 });
 
 // The code in the UserScheme.pre() function is called a pre-hook.
