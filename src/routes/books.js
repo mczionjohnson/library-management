@@ -3,6 +3,7 @@ import logger from "../logger/logger.js";
 
 import Book from "../models/bookSchema.js";
 import User from "../models/userSchema.js";
+import Lib from "../models/libSchema.js";
 import * as userController from "../controllers/book.controller.js";
 
 import jwt from "jsonwebtoken";
@@ -10,6 +11,7 @@ import checkAuth from "../middleware/auth.middleware.js";
 
 const bookRouter = Router();
 
+// all users can visit this 2 routes
 bookRouter.get("/", userController.getAllBooks);
 
 // move to userController
@@ -28,23 +30,25 @@ bookRouter.get("/:bookId", async (req, res) => {
   }
 });
 
+// only librarian can use this 5 routes
 bookRouter.post("/:bookId/borrow", async (req, res) => {
   try {
     const { bookId } = req.params;
 
     let token = req.headers.authorization;
-    token = token.split(" ")[1];
 
     if (!token) {
       res.json("No token provided");
     }
     if (token) {
+      token = token.split(" ")[1];
+
       // SECRET is stored in .env
       jwt.verify(token, process.env.JWT_SECRET, async (err, authToken) => {
         const email = authToken.email;
         // logger.info(authToken)
         if (err) {
-          res.redirect("/");
+          return res.status(401).json({ message: "Unauthorized4" });
         } else {
           let user = await User.findOne({ email });
 
@@ -125,7 +129,7 @@ bookRouter.post("/:bookId/return", async (req, res) => {
       // SECRET is stored in .env
       jwt.verify(token, process.env.JWT_SECRET, async (err, authToken) => {
         if (err) {
-          return res.status(401).json({ message: "Unauthorized4" });
+          return res.status(401).json({ message: "Unauthorized5" });
         } else {
           const email = authToken.email;
           // logger.info(authToken)
@@ -189,11 +193,11 @@ bookRouter.post("/:bookId/return", async (req, res) => {
               }
             );
 
-              // confirm the update
-              const update = await User.findOne({ _id: loggedUserId });
-              console.log(update);
+            // confirm the update
+            const update = await User.findOne({ _id: loggedUserId });
+            console.log(update);
 
-              res.status(200).json({ message: "Book returned", borrowedBook });
+            res.status(200).json({ message: "Book returned", borrowedBook });
             //   // logger.info(`Success: ${user.email} posted a blog`);
           }
         }

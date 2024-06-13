@@ -34,15 +34,13 @@ export const libSignup = async (req, res) => {
   if (!libPass) {
     return res.status(400).json({ message: "Enter your Library Pass" });
   }
-  const libSecret = process.env.libSecret;
-  // const asstLibSecret = process.env.asstLibSecret
+  
+  const libSecret = process.env.LIB_SECRET;
+
 
   if (libPass != libSecret) {
     return res.status(400).json({ message: "unauthorized" });
   }
-  // if (libPass != asstLib ) {
-  //   return res.status(400).json({ message: "unauthorized" });
-  // }
 
   const payload = {};
   if (name) {
@@ -80,11 +78,15 @@ export const libLogin = async (req, res) => {
   if (!password) {
     return res.status(400).json({ message: "Enter password" });
   }
+
   const user = await User.findOne({ email });
+
   if (!user) {
     return res.status(404).json({ message: "User not found" });
   }
+
   const checkPassword = await user.isValidPassword(password);
+  
   if (checkPassword == false) {
     return res.status(401).json({ message: "Password is incorrect" });
   } else if (user.role != "library") {

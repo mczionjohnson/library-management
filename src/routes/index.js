@@ -19,7 +19,7 @@ indexRouter.post("/signup", generateMiddleWare(registerSchema), memSignup)
 indexRouter.post("/library/signup", generateMiddleWare(registerLibSchema), libSignup)
 
 
-indexRouter.post("/login", generateMiddleWare(loginSchema),memLogin)
+// indexRouter.post("/login", generateMiddleWare(loginSchema),memLogin)
 indexRouter.post("/library/login", generateMiddleWare(loginLibSchema), libLogin)
 
 

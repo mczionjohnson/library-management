@@ -10,7 +10,13 @@ email: Joi.string().email().required(),
         'Password must contain only letters, numbers, or "@" and be between 3 and 30 characters long.',
     }),
   // confirmPassword: Joi.string().valid(Joi.ref("password")).required(),
-  //   role: Joi.string().valid("USER", "ADMIN"),
+  libPass: Joi.string()
+  .pattern(new RegExp("^[a-zA-Z0-9]{9,10}!@#$"))
+  .required()
+  .messages({
+    "string.pattern.base":
+      'library pass is a level 10.',
+  }),
 });
 
 export const loginLibSchema = Joi.object({

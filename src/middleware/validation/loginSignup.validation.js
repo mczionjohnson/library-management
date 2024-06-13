@@ -12,9 +12,16 @@ export const registerSchema = Joi.object({
     }),
   // confirmPassword: Joi.string().valid(Joi.ref("password")).required(),
   //   role: Joi.string().valid("USER", "ADMIN"),
+  libPass: Joi.string()
+  .pattern(new RegExp("^[a-zA-Z0-9]{9,10}!@#$"))
+  .required()
+  .messages({
+    "string.pattern.base":
+      'library pass is a level 10.',
+  }),
 });
 
-export const loginSchema = Joi.object({
-  email: Joi.string().email().required(),
-  password: Joi.string().required(),
-});
+// export const loginSchema = Joi.object({
+//   email: Joi.string().email().required(),
+//   password: Joi.string().required(),
+// });
