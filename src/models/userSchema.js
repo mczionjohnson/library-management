@@ -2,9 +2,9 @@ import mongoose from "mongoose";
 
 import bcrypt from "bcrypt";
 
-const subSchema = new mongoose.Schema({
-  _id: mongoose.Schema.Types.ObjectId,
-});
+// const subSchema = new mongoose.Schema({
+//   _id: mongoose.Schema.Types.ObjectId,
+// });
 
 const userSchema = mongoose.Schema({
   name: {
@@ -25,7 +25,7 @@ const userSchema = mongoose.Schema({
     enum: ["user", "library"],
   },
 
-  myArray: [subSchema],
+  myArray: { type: Array, default: [] },
   // borrowedBooks: {
   //   type: mongoose.Schema.Types.ObjectId,
   //   default: null,
