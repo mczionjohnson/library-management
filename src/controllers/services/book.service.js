@@ -33,7 +33,7 @@ export const getAllBooks = async (page = 1, limit = 5, query) => {
       return { data: searchData, meta: { page, limit } };
     } else {
       // // set cacheKey and check for cache
-      // const cacheKey = "publishedBlog";
+      // const cacheKey = "publishedBook";
 
       // // get data from database
       // const value = await redisClient.get(cacheKey);
@@ -52,7 +52,7 @@ export const getAllBooks = async (page = 1, limit = 5, query) => {
         .limit(limit);
 
       // // set cache with expirition of 1 minute
-      // await redisClient.setEx(cacheKey, 1 * 60, JSON.stringify(publishedBlogs));
+      // await redisClient.setEx(cacheKey, 1 * 60, JSON.stringify(publishedBooks));
       return { data: allBooks, meta: { page, limit } };
     }
   } catch (error) {

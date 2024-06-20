@@ -14,7 +14,6 @@ const bookRouter = Router();
 // all users can visit this 2 routes
 bookRouter.get("/", userController.getAllBooks);
 
-// move to userController
 bookRouter.get("/:bookId", async (req, res) => {
   const { bookId } = req.params;
 
@@ -24,13 +23,13 @@ bookRouter.get("/:bookId", async (req, res) => {
     });
 
     res.status(200).json({ message: "viewing a book", Book: singleBook });
-    // logger.info(`Success: ${email} viewed a blog`);
+    // logger.info(`Success: ${email} viewed a book`);
   } catch {
     res.status(404).json({ message: "not found" });
   }
 });
 
-// only librarian can use this 5 routes
+
 bookRouter.post("/:bookId/borrow", async (req, res) => {
   try {
     const { bookId } = req.params;
@@ -45,11 +44,12 @@ bookRouter.post("/:bookId/borrow", async (req, res) => {
 
       // SECRET is stored in .env
       jwt.verify(token, process.env.JWT_SECRET, async (err, authToken) => {
-        const email = authToken.email;
-        // logger.info(authToken)
+
         if (err) {
           return res.status(401).json({ message: "Unauthorized4" });
         } else {
+          const email = authToken.email;
+          // logger.info(authToken)
           let user = await User.findOne({ email });
 
           const loggedUserId = user._id;
@@ -102,7 +102,7 @@ bookRouter.post("/:bookId/borrow", async (req, res) => {
           console.log(update);
 
           res.status(200).json({ message: "Book borrowed", borrowedBook });
-          // logger.info(`Success: ${user.email} posted a blog`);
+          // logger.info(`Success: ${user.email} posted a book`);
         }
       });
     }
@@ -129,7 +129,7 @@ bookRouter.post("/:bookId/return", async (req, res) => {
       // SECRET is stored in .env
       jwt.verify(token, process.env.JWT_SECRET, async (err, authToken) => {
         if (err) {
-          return res.status(401).json({ message: "Unauthorized5" });
+          return res.status(401).json({ message: "Unauthorized4" });
         } else {
           const email = authToken.email;
           // logger.info(authToken)
@@ -198,7 +198,7 @@ bookRouter.post("/:bookId/return", async (req, res) => {
             console.log(update);
 
             res.status(200).json({ message: "Book returned", borrowedBook });
-            //   // logger.info(`Success: ${user.email} posted a blog`);
+            //   // logger.info(`Success: ${user.email} posted a book`);
           }
         }
       });

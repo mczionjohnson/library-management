@@ -10,8 +10,7 @@ import httpLogger from "./logger/httpLogger.js";
 
 import indexRouter from "./routes/index.js";
 import bookRouter from "./routes/books.js";
-// import authBlogRouter from "./routes/not-needed.js";
-// import redisClient from "./integrations/redis.js"
+import libRouter from "./routes/library.js";
 
 const app = express();
 
@@ -24,8 +23,6 @@ app.use(helmet());
 // for morgan
 app.use(httpLogger);
 
-
-
 app.use(express.json());
 
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -33,11 +30,10 @@ app.use(bodyParser.urlencoded({ extended: true }));
 dotenv.config();
 
 db();
-// redisClient.connect()
 
 app.use("/", indexRouter);
 app.use("/books", bookRouter);
-// app.use("/allmyblogs", memRouter);
+app.use("/library", libRouter);
 
 app.all("*", (req, res) => {
   res.status(404);

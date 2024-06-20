@@ -8,20 +8,14 @@ export const registerSchema = Joi.object({
     .required()
     .messages({
       "string.pattern.base":
-        'Password must contain only letters, numbers, or "@" and be between 3 and 30 characters long.',
+        'Password can contain only letters, numbers and be between 3 and 30 characters long.',
     }),
   // confirmPassword: Joi.string().valid(Joi.ref("password")).required(),
   //   role: Joi.string().valid("USER", "ADMIN"),
-  libPass: Joi.string()
-  .pattern(new RegExp("^[a-zA-Z0-9]{9,10}!@#$"))
-  .required()
-  .messages({
-    "string.pattern.base":
-      'library pass is a level 10.',
-  }),
 });
 
-// export const loginSchema = Joi.object({
-//   email: Joi.string().email().required(),
-//   password: Joi.string().required(),
-// });
+export const loginSchema = Joi.object({
+  email: Joi.string().email().required(),
+  password: Joi.string().required(),
+});
+

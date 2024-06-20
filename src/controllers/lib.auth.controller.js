@@ -10,7 +10,6 @@ dotenv.config();
 export const libSignup = async (req, res) => {
   res.setHeader("Content-Type", "application/json");
 
-  const name = req.body.name;
   const email = req.body.email;
   const password = req.body.password;
   const libPass = req.body.libPass;
@@ -22,9 +21,7 @@ export const libSignup = async (req, res) => {
     return;
   }
 
-  if (!name) {
-    return res.status(400).json({ message: "Enter name" });
-  }
+
   if (!email) {
     return res.status(400).json({ message: "Enter email" });
   }
@@ -43,9 +40,6 @@ export const libSignup = async (req, res) => {
   }
 
   const payload = {};
-  if (name) {
-    payload.name = name;
-  }
   if (email) {
     payload.email = email;
   }
