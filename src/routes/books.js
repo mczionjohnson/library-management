@@ -3,7 +3,7 @@ import logger from "../logger/logger.js";
 
 import Book from "../models/bookSchema.js";
 import User from "../models/userSchema.js";
-import Lib from "../models/libSchema.js";
+
 import * as userController from "../controllers/book.controller.js";
 
 import jwt from "jsonwebtoken";

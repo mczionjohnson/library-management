@@ -2,6 +2,8 @@ import logger from "../logger/logger.js";
 import dotenv from "dotenv";
 
 import User from "../models/userSchema.js";
+
+
 import Jwt from "jsonwebtoken";
 
 dotenv.config();
@@ -43,7 +45,12 @@ export const memSignup = async (req, res) => {
   const user = new User({
     ...payload,
   });
+  const libUser = new Lib({
+    ...payload,
+  });
+
   const savedUser = await user.save();
+
 
   res.json({ message: "Success", savedUser });
 };
